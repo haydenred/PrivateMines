@@ -65,7 +65,10 @@ public class Main extends JavaPlugin {
         };
         userInterfaceAPI = new UserInterfaceAPI(this, actionHandler);
 
+        //Initalize commands
         this.getCommand("privatemines").setExecutor(new Command(this));
+        this.getCommand("privatemines").setTabCompleter(new Command(this));
+
 
         privateMineFactory = new PrivateMineFactory(this);
         worldManger = new WorldManager(this);

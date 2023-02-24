@@ -4,9 +4,15 @@ import me.hayden.privatemines.mines.MineType;
 import me.hayden.privatemines.mines.PrivateMine;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
-public class Command implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Command implements CommandExecutor, TabCompleter {
 
     private final Main plugin;
 
@@ -70,6 +76,28 @@ public class Command implements CommandExecutor {
         }
 
         return true;
+    }
+
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command cmd, String alias, String[] args) {
+        System.out.println(cmd.getName().toLowerCase());
+        if (cmd.getName().equalsIgnoreCase("privatemines")) {
+            final List<String> oneArgList = new ArrayList<>();
+            final List<String> completions = new ArrayList<>();
+
+            if (args.length == 1){
+                oneArgList.add("create");
+                oneArgList.add("teleport");
+                oneArgList.add("fill");
+                oneArgList.add("delete");
+                StringUtil.copyPartialMatches(args[0], oneArgList, completions);
+            }
+
+            Collections.sort(completions);
+            return completions;
+        }
+        return Collections.EMPTY_LIST;
     }
 
 
