@@ -1,0 +1,12 @@
+name: PrivateMines
+version: ${project.parent.version}
+main: me.hayden.privatemines.Main
+depend:
+  - WorldEdit
+  - WorldGuard
+  - PlaceholderAPI
+api-version: 1.13
+commands:
+  privatemines:
+    description: Main command
+    usage: /<command>

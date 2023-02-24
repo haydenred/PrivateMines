@@ -1,0 +1,29 @@
+menu:
+  name: "&8Menu"
+  command: "privatemines"
+  size: 27
+  contents:
+    create_mine:
+      displayname: "&bCreate Mine"
+      lore:
+        - "&7&o((click here to create a mine))"
+      material: DIAMOND_PICKAXE
+      #glowing: true
+      slot: 14
+      actions:
+        - "[message] &aCreating mine....."
+        - "[broadcast] &a%player% is creating mine"
+        - "[close]"
+        - "[console] say I am awesome"
+        - "[player] balance"
+      requirements:
+        permission:
+          type: permission
+          input: privatemines.create
+          output: true
+        money:
+          type: '>='
+          input: '%vault_eco_balance%'
+          output: '50000'
+        deny-commands:
+          - "[message] &cYou don't meet the requirements for this action"

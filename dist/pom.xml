@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>parent</artifactId>
+        <groupId>me.hayden.privatemines</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>dist</artifactId>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
+
+
+    <build>
+        <directory>../target</directory>
+        <finalName>PrivateMines-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>me.hayden.*</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>me.hayden.privatemines</groupId>
+            <artifactId>main</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.hayden.privatemines</groupId>
+            <artifactId>legacy</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.hayden.privatemines</groupId>
+            <artifactId>modern</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

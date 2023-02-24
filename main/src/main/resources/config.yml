@@ -1,0 +1,39 @@
+settings:
+  check-for-updates: true
+  mines:
+    mine-distance: 500
+    mines-created: 1 #Do not touch this. It tells the plugin where the last mine was created so it can determine the location for the next one
+    flags:
+      mine:
+        pvp: deny
+        block-break: allow
+        feed-amount: 20
+        feed-delay: 1
+      structure:
+        pvp: deny
+        build: deny
+        exit: deny
+        feed-amount: 20
+        feed-delay: 1
+    blocks:
+      mine-region: DIAMOND_BLOCK
+      spawn-point: GOLD_BLOCK
+
+
+
+mine_types:
+  test:
+    filling:
+      - EMERALD_BLOCK:50
+      - DIAMOND_BLOCK:50
+    schematic: "schematics/test.schem"
+  god:
+    filling:
+      - EMERALD_BLOCK:50
+      - DIAMOND_BLOCK:50
+    schematic: "schematics/god.schematic"
+  donor:
+    filling:
+      - DIAMOND_BLOCK:50
+      - GOLD_BLOCK:50
+    schematic: "schematics/donor.schematic"
