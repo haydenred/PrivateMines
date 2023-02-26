@@ -23,17 +23,20 @@ settings:
 
 mine_types:
   test:
+    priority: 1
     filling:
-      - EMERALD_BLOCK:50
+      - GOLD_BLOCK:10
+      - EMERALD_BLOCK:40
       - DIAMOND_BLOCK:50
     schematic: "schematics/test.schem"
   god:
+    priority: 2
     filling:
-      - EMERALD_BLOCK:50
-      - DIAMOND_BLOCK:50
-    schematic: "schematics/god.schematic"
+      - EMERALD_BLOCK:75
+      - DIAMOND_BLOCK:25
+    schematic: "schematics/test.schem"
   donor:
+    priority: 3
     filling:
-      - DIAMOND_BLOCK:50
-      - GOLD_BLOCK:50
-    schematic: "schematics/donor.schematic"
+      - EMERALD_BLOCK:100
+    schematic: "schematics/test.schem"

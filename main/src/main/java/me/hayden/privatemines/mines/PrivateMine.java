@@ -1,5 +1,6 @@
 package me.hayden.privatemines.mines;
 
+import me.hayden.privatemines.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -54,6 +55,14 @@ public class PrivateMine implements ConfigurationSerializable {
 
     public Mine getMine() {
         return mine;
+    }
+
+    public void upgrade() {
+        int priority = type.getPriority();
+        if (MineType.priorityExists(priority + 1)) {
+            Main.plugin.getMineStorage().removeMine(owner.getUniqueId());
+            Main.plugin.getPrivateMineFactory().createPrivateMine(getSpawn(), owner.getUniqueId().toString(), MineType.getTypeByPriority(priority + 1));
+        }
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Command implements CommandExecutor, TabCompleter {
                 }
                 player.sendMessage("Creating mine....");
                 player.sendMessage("Your uuid is " + player.getUniqueId());
-                plugin.getPrivateMineFactory().createPrivateMine(plugin.getWorldManger().getNextFreeLocation(), player.getUniqueId().toString(), new MineType("test"));
+                plugin.getPrivateMineFactory().createPrivateMine(plugin.getWorldManger().getNextFreeLocation(), player.getUniqueId().toString(), MineType.getTypeByPriority(1));
                 player.teleport(plugin.getMineStorage().getMine(player.getUniqueId()).getSpawn());
                 return true;
             }
@@ -71,6 +71,17 @@ public class Command implements CommandExecutor, TabCompleter {
                 return true;
             }
 
+            if (args[0].equalsIgnoreCase("upgrade")) {
+                if (!plugin.getMineStorage().hasMine(player.getUniqueId())) {
+                    player.sendMessage("You don't have a mine");
+                    return true;
+                }
+                PrivateMine privateMine = plugin.getMineStorage().getMine(player.getUniqueId());
+                if (MineType.priorityExists(privateMine.getType().getPriority() + 1)) {
+                    privateMine.upgrade();
+                }
+            }
+
             //player.teleport(new Location(Bukkit.getWorld("privatemines"), 0, 50, 0));
             //plugin.getPrivateMineFactory().createPrivateMine(new Location(Bukkit.getWorld("privatemines"), 0, 50, 0), player.getUniqueId(), "test");
         }
@@ -83,15 +94,15 @@ public class Command implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command cmd, String alias, String[] args) {
         System.out.println(cmd.getName().toLowerCase());
         if (cmd.getName().equalsIgnoreCase("privatemines")) {
-            final List<String> oneArgList = new ArrayList<>();
             final List<String> completions = new ArrayList<>();
 
-            if (args.length == 1){
-                oneArgList.add("create");
-                oneArgList.add("teleport");
-                oneArgList.add("fill");
-                oneArgList.add("delete");
-                StringUtil.copyPartialMatches(args[0], oneArgList, completions);
+            if (args.length == 1) {
+                final List<String> argList = new ArrayList<>();
+                argList.add("create");
+                argList.add("teleport");
+                argList.add("fill");
+                argList.add("delete");
+                StringUtil.copyPartialMatches(args[0], argList, completions);
             }
 
             Collections.sort(completions);
