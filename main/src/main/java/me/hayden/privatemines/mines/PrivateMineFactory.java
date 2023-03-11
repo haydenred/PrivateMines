@@ -71,6 +71,9 @@ public class PrivateMineFactory {
         PrivateMine privateMine = new PrivateMine(mineName, spawnPoint, mineType, minePos.get(0), minePos.get(1), structureRegionName, mineRegionName);
         plugin.getMineStorage().addMine(privateMine);
 
+        //reset mine so its filled when created
+        privateMine.resetMine();
+
         return privateMine;
     }
 

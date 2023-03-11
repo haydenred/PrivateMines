@@ -4,14 +4,14 @@ menu:
   size: 27
   contents:
     create_mine:
-      displayname: "&bCreate Mine"
+      displayname: "&aTeleport"
       lore:
-        - "&7&o((click here to create a mine))"
-      material: DIAMOND_PICKAXE
+        - "&7&o((click here to teleport))"
+      material: COMPASS
       #glowing: true
-      slot: 14
+      slot: 13
       actions:
-        - "[message] &aCreating mine....."
+        - "[message] &aTeleporting..."
         - "[broadcast] &a%player% is creating mine"
         - "[close]"
         - "[console] say I am awesome"
@@ -24,6 +24,6 @@ menu:
         money:
           type: '>='
           input: '%vault_eco_balance%'
-          output: '50000'
+          output: 50000
         deny-commands:
           - "[message] &cYou don't meet the requirements for this action"

@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static me.hayden.privatemines.Main.plugin;
+
 public class PrivateMine implements ConfigurationSerializable {
 
     private final OfflinePlayer owner;
@@ -57,12 +59,21 @@ public class PrivateMine implements ConfigurationSerializable {
         return mine;
     }
 
+    public void resetMine() {
+        getMine().reset();
+        plugin.getMineStorage().addMine(this);
+    }
     public void upgrade() {
         int priority = type.getPriority();
         if (MineType.priorityExists(priority + 1)) {
-            Main.plugin.getMineStorage().removeMine(owner.getUniqueId());
-            Main.plugin.getPrivateMineFactory().createPrivateMine(getSpawn(), owner.getUniqueId().toString(), MineType.getTypeByPriority(priority + 1));
+            plugin.getMineStorage().removeMine(owner.getUniqueId());
+            plugin.getPrivateMineFactory().createPrivateMine(plugin.getWorldManger().getNextFreeLocation(), owner.getUniqueId().toString(), MineType.getTypeByPriority(priority + 1));
         }
+    }
+
+    //Save changes made to privatemine
+    public void save() {
+        plugin.getMineStorage().addMine(this);
     }
 
     @Override

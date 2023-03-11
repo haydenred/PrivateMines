@@ -1,5 +1,7 @@
 package me.hayden.privatemines;
 
+import me.hayden.privatemines.commands.Command;
+import me.hayden.privatemines.commands.PlayerCommandListener;
 import me.hayden.privatemines.mines.Mine;
 import me.hayden.privatemines.mines.MineType;
 import me.hayden.privatemines.mines.PrivateMine;
@@ -69,6 +71,9 @@ public class Main extends JavaPlugin {
         this.getCommand("privatemines").setExecutor(new Command(this));
         this.getCommand("privatemines").setTabCompleter(new Command(this));
 
+        //Initalize Listeners
+        getServer().getPluginManager().registerEvents(new PlayerCommandListener(this), this);
+
 
         privateMineFactory = new PrivateMineFactory(this);
         worldManger = new WorldManager(this);
@@ -84,6 +89,10 @@ public class Main extends JavaPlugin {
         //Create custom configuration files
         createMenuConfig();
         createMessagesConfig();
+
+        //Start mine reset task
+        new MineResetTask(this).runTaskTimer(this, 0, 60);
+
     }
 
     private void loadDependencies() {

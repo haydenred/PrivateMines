@@ -26,6 +26,7 @@ public class MenuItem {
     private final boolean glowing;
     private final List<String> actions;
     private final List<RequirementImplementation> requirements;
+
     public MenuItem(ConfigurationSection path, UserInterfaceAPI userInterfaceAPI) {
         this.path = path;
         this.userInterfaceAPI = userInterfaceAPI;
@@ -38,16 +39,17 @@ public class MenuItem {
         this.actions = path.getStringList("actions");
         this.requirements = new ArrayList<>();
 
-        for (String s : path.getConfigurationSection("requirements").getKeys(false)) {
-            if (s.equalsIgnoreCase("deny-commands")) {
-                continue;
+        if (path.contains("requirements")) {
+            for (String s : path.getConfigurationSection("requirements").getKeys(false)) {
+                if (s.equalsIgnoreCase("deny-commands")) {
+                    continue;
+                }
+                ConfigurationSection section = path.getConfigurationSection("requirements." + s);
+                //We don't want it counting the deny commands as a requirement section
+                RequirementImplementation r = userInterfaceAPI.getRequirement(section);
+                r.setPath(section);
+                requirements.add(r);
             }
-            ConfigurationSection section = path.getConfigurationSection("requirements." + s);
-            //We don't want it counting the deny commands as a requirement section
-            RequirementImplementation r = userInterfaceAPI.getRequirement(section);
-            r.setPath(section);
-            requirements.add(r);
-            System.out.println(requirements);
         }
 
         //Build item
@@ -62,7 +64,6 @@ public class MenuItem {
         meta.setLore(this.lore);
 
         this.item.setItemMeta(meta);
-        System.out.println("requirements " + requirements);
 
     }
 

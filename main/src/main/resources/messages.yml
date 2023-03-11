@@ -1,0 +1,11 @@
+help:
+  - "&d&lPRIVATEMINES"
+  - " &8- &7/privatemines create"
+  - " &8- &7/privatemines delete"
+  - " &8- &7/privatemines teleport"
+permission-denied: "&d&lPRIVATEMINES &8- &7You don't have permission"
+teleport-success: "&d&lPRIVATEMINES &8- &7You have been teleported"
+create-success: "&d&lPRIVATEMINES &8- &7Your mine has been created"
+delete-success: "&d&lPRIVATEMINES &8- &7Your mine has been deleted"
+already-has-mine: "&d&lPRIVATEMINES &8- &7You already own a mine"
+doesnt-own-mine: "&d&lPRIVATEMINES &8- &7You don't own a mine"

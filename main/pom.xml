@@ -55,7 +55,9 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <configuration>
+                        <createDependencyReducedPom>false</createDependencyReducedPom>
                     <relocations>
+
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
                             <!-- Be sure to change the package below -->

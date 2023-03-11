@@ -10,14 +10,20 @@ import java.util.Map;
 public class MineType implements ConfigurationSerializable {
 
     private final String schematic_path;
-    private String name;
     private final Integer priority;
+    private String name;
 
     public MineType(String name) {
         JavaPlugin plugin = Main.plugin;
         this.schematic_path = plugin.getDataFolder().getPath() + "/" + plugin.getConfig().getString("mine_types." + name + ".schematic");
         this.name = name;
         this.priority = plugin.getConfig().getInt("mine_types." + name + ".priority");
+    }
+
+    public MineType(Map<String, Object> config) {
+        this.schematic_path = (String) config.get("schematic_path");
+        this.name = (String) config.get("name");
+        this.priority = (Integer) config.get("priority");
     }
 
     public static MineType getTypeByPriority(Integer priority) {
@@ -49,13 +55,6 @@ public class MineType implements ConfigurationSerializable {
 
     public String getSchematic_path() {
         return schematic_path;
-    }
-
-
-    public MineType(Map<String, Object> config) {
-        this.schematic_path = (String) config.get("schematic_path");
-        this.name = (String) config.get("name");
-        this.priority = (Integer) config.get("priority");
     }
 
     @Override

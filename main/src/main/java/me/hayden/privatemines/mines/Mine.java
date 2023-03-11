@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class Mine implements ConfigurationSerializable {
 
     private final HashMap<String, Integer> filling;
     private final String mineRegionName;
+    private Long lastReset;
     private final Location pos1;
     private final Location pos2;
 
@@ -21,6 +23,7 @@ public class Mine implements ConfigurationSerializable {
         this.pos1 = pos1;
         this.pos2 = pos2;
         this.mineRegionName = mineRegionName;
+        this.lastReset = System.currentTimeMillis();
 
         filling = new HashMap<>();
         for (String s : Main.plugin.getConfig().getStringList("mine_types." + privateMine.getType().getName() + ".filling")) {
@@ -35,6 +38,7 @@ public class Mine implements ConfigurationSerializable {
         this.filling = (HashMap<String, Integer>) config.get("filling");
         this.pos1 = (Location) config.get("pos1");
         this.pos2 = (Location) config.get("pos2");
+        this.lastReset = (Long) config.get("lastreset");
     }
 
 
@@ -54,10 +58,11 @@ public class Mine implements ConfigurationSerializable {
         return mineRegionName;
     }
 
-
-    public void reset() {
+    protected void reset() {
         Main.plugin.getWorldEdit().fillRegion(filling, pos1, pos2);
+        this.lastReset = System.currentTimeMillis();
     }
+    public Long getLastReset() { return lastReset; }
 
     @Override
     public Map<String, Object> serialize() {
@@ -66,6 +71,7 @@ public class Mine implements ConfigurationSerializable {
         result.put("pos1", this.pos1);
         result.put("pos2", this.pos2);
         result.put("filling", this.filling);
+        result.put("lastreset", this.lastReset);
         return result;
     }
 }

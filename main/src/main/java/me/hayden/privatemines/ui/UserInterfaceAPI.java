@@ -49,7 +49,6 @@ public class UserInterfaceAPI {
             return null;
         }
         String type = section.getString("type");
-        System.out.println("type: " + type);
         List<RequirementImplementation> clonedList = new ArrayList<>(requirements);
         for (RequirementImplementation i : clonedList) {
             if (i.getType().equalsIgnoreCase(type)) {
