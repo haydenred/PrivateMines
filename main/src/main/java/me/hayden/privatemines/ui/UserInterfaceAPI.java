@@ -1,8 +1,12 @@
 package me.hayden.privatemines.ui;
 
 import me.hayden.privatemines.ui.requirements.GreaterThanEqualRequirement;
+import me.hayden.privatemines.ui.requirements.GreaterThanRequirement;
+import me.hayden.privatemines.ui.requirements.LessThanEqualRequirement;
+import me.hayden.privatemines.ui.requirements.LessThanRequirement;
 import me.hayden.privatemines.ui.requirements.PermissionRequirement;
 import me.hayden.privatemines.ui.requirements.PlaceholderRequirement;
+import me.hayden.privatemines.ui.requirements.StringEqualsRequirement;
 import me.hayden.privatemines.ui.requirements.impl.RequirementImplementation;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +46,14 @@ public class UserInterfaceAPI {
         this.requirements.add(new PermissionRequirement());
         this.requirements.add(new PlaceholderRequirement());
         this.requirements.add(new GreaterThanEqualRequirement());
+        this.requirements.add(new GreaterThanRequirement());
+        this.requirements.add(new LessThanRequirement());
+        this.requirements.add(new LessThanEqualRequirement());
+        this.requirements.add(new StringEqualsRequirement());
+    }
+
+    public void registerRequirement(RequirementImplementation requirement) {
+        this.requirements.add(requirement);
     }
 
     public RequirementImplementation getRequirement(ConfigurationSection section) {

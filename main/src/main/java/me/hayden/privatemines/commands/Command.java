@@ -29,10 +29,7 @@ public class Command implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                plugin.getMessagesConfig().getStringList("help").forEach(s-> {
-                    player.sendMessage(ChatUtil.color(s));
-                });
-                //plugin.getUserInterfaceAPI().getMenu(plugin.getMenuConfig().getConfigurationSection("menu")).build().open(player);
+                plugin.getUserInterfaceAPI().getMenu(plugin.getMenuConfig().getConfigurationSection("menu")).build().open(player);
                 return true;
             }
 
@@ -68,6 +65,37 @@ public class Command implements CommandExecutor, TabCompleter {
                 }
                 plugin.getMineStorage().removeMine(player.getUniqueId());
                 player.sendMessage(Messages.DELETE_SUCCESS.toString());
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("upgrade")) {
+                if (!player.hasPermission("privatemines.upgrade")) { player.sendMessage(Messages.PERMISSION_DENIED.toString()); return true; }
+                if (!plugin.getMineStorage().hasMine(player.getUniqueId())) {
+                    player.sendMessage(Messages.DOESNT_OWN_MINE.toString());
+                    return true;
+                }
+                PrivateMine privateMine = plugin.getMineStorage().getMine(player.getUniqueId());
+                if (!MineType.priorityExists(privateMine.getType().getPriority() + 1)) {
+                    player.sendMessage(Messages.MAX_MINE_LEVEL.toString());
+                    return true;
+                }
+                privateMine.upgrade();
+                player.sendMessage(Messages.UPGRADE_SUCCESS.toString());
+                if (plugin.getMineStorage().hasMine(player.getUniqueId())) {
+                    player.teleport(plugin.getMineStorage().getMine(player.getUniqueId()).getSpawn());
+                }
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("reset")) {
+                if (!player.hasPermission("privatemines.reset")) { player.sendMessage(Messages.PERMISSION_DENIED.toString()); return true; }
+                if (!plugin.getMineStorage().hasMine(player.getUniqueId())) {
+                    player.sendMessage(Messages.DOESNT_OWN_MINE.toString());
+                    return true;
+                }
+                PrivateMine privateMine = plugin.getMineStorage().getMine(player.getUniqueId());
+                privateMine.resetMine();
+                player.sendMessage(Messages.RESET_SUCCESS.toString());
                 return true;
             }
 
@@ -144,6 +172,8 @@ public class Command implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("privatemines.create")) { argList.add("create"); }
                 if (player.hasPermission("privatemines.teleport")) { argList.add("teleport"); }
                 if (player.hasPermission("privatemines.delete")) { argList.add("delete"); }
+                if (player.hasPermission("privatemines.upgrade")) { argList.add("upgrade"); }
+                if (player.hasPermission("privatemines.reset")) { argList.add("reset"); }
                 if (player.hasPermission("privatemines.admin")) { argList.add("admin"); }
                 StringUtil.copyPartialMatches(args[0], argList, completions);
             }

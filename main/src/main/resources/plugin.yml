@@ -10,3 +10,22 @@ commands:
   privatemines:
     description: Main command
     usage: /<command>
+permissions:
+  privatemines.create:
+    description: Allows player to create a private mine
+    default: true
+  privatemines.teleport:
+    description: Allows player to teleport to their mine
+    default: true
+  privatemines.delete:
+    description: Allows player to delete their mine
+    default: true
+  privatemines.upgrade:
+    description: Allows player to upgrade their mine
+    default: true
+  privatemines.reset:
+    description: Allows player to reset their mine
+    default: true
+  privatemines.admin:
+    description: Allows access to admin commands
+    default: op

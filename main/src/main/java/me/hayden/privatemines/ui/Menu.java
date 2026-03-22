@@ -18,7 +18,6 @@ public class Menu {
     private final HashMap<MenuItem, Integer> contents;
     private Player player; //Player is only assigned when the menu is opened
 
-
     private Inventory menuInventory;
 
     public Menu(UserInterfaceAPI userInterfaceAPI, ConfigurationSection path) {
@@ -33,7 +32,6 @@ public class Menu {
     }
 
     private void putContents() {
-
         for (String s : menu_path.getConfigurationSection("contents").getKeys(false)) {
             final ConfigurationSection item_path = menu_path.getConfigurationSection("contents." + s);
             MenuItem menuItem = new MenuItem(item_path, userInterfaceAPI);
@@ -53,17 +51,19 @@ public class Menu {
         }
 
         return this;
-
     }
 
     public void open(Player player) {
+        this.player = player;
         player.openInventory(menuInventory);
         InventoryManager.activeInventories.put(menuInventory, this);
     }
 
     public void close() {
-        player.closeInventory();
-        InventoryManager.activeInventories.remove(menuInventory, this);
+        if (player != null) {
+            player.closeInventory();
+        }
+        InventoryManager.activeInventories.remove(menuInventory);
     }
 
     public MenuItem getItemAtSlot(int targetSlot) {
@@ -78,9 +78,12 @@ public class Menu {
         return null;
     }
 
-    public void getRequirement(String type) {
-
+    public UserInterfaceAPI getUserInterfaceAPI() {
+        return userInterfaceAPI;
     }
 
+    public ConfigurationSection getPath() {
+        return menu_path;
+    }
 
 }
