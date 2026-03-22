@@ -1,29 +1,117 @@
 menu:
-  name: "&8Menu"
+  name: "&8&lPrivate Mines"
   command: "privatemines"
   size: 27
   contents:
     create_mine:
-      displayname: "&aTeleport"
+      displayname: "&a&lCreate Mine"
       lore:
-        - "&7&o((click here to teleport))"
-      material: COMPASS
-      #glowing: true
-      slot: 13
+        - "&7Create your private mine"
+        - ""
+        - "&aClick to create!"
+      material: GRASS_BLOCK
+      slot: 10
       actions:
-        - "[message] &aTeleporting..."
-        - "[broadcast] &a%player% is creating mine"
+        - "[mine-create]"
         - "[close]"
-        - "[console] say I am awesome"
-        - "[player] balance"
       requirements:
+        no_mine:
+          type: has-mine
+          output: "false"
         permission:
           type: permission
           input: privatemines.create
           output: true
-        money:
-          type: '>='
-          input: '%vault_eco_balance%'
-          output: 50000
         deny-commands:
-          - "[message] &cYou don't meet the requirements for this action"
+          - "[message] &cYou already own a mine or lack permission!"
+    teleport_mine:
+      displayname: "&b&lTeleport to Mine"
+      lore:
+        - "&7Teleport to your private mine"
+        - ""
+        - "&bClick to teleport!"
+      material: COMPASS
+      slot: 12
+      actions:
+        - "[mine-teleport]"
+        - "[close]"
+        - "[sound] ENTITY_ENDERMAN_TELEPORT"
+      requirements:
+        has_mine:
+          type: has-mine
+          output: "true"
+        permission:
+          type: permission
+          input: privatemines.teleport
+          output: true
+        deny-commands:
+          - "[message] &cYou don't own a mine!"
+    reset_mine:
+      displayname: "&e&lReset Mine"
+      lore:
+        - "&7Reset your mine's blocks"
+        - ""
+        - "&eClick to reset!"
+      material: BUCKET
+      slot: 13
+      actions:
+        - "[mine-reset]"
+        - "[actionbar] &aYour mine has been reset!"
+        - "[sound] BLOCK_ANVIL_USE"
+      requirements:
+        has_mine:
+          type: has-mine
+          output: "true"
+        permission:
+          type: permission
+          input: privatemines.reset
+          output: true
+        deny-commands:
+          - "[message] &cYou don't own a mine!"
+    upgrade_mine:
+      displayname: "&6&lUpgrade Mine"
+      lore:
+        - "&7Upgrade your mine to the next tier"
+        - ""
+        - "&6Click to upgrade!"
+      material: NETHER_STAR
+      slot: 14
+      glowing: true
+      actions:
+        - "[mine-upgrade]"
+        - "[close]"
+        - "[title] &6&lUpgraded!;&7Your mine is now better!"
+        - "[sound] ENTITY_PLAYER_LEVELUP"
+      requirements:
+        has_mine:
+          type: has-mine
+          output: "true"
+        permission:
+          type: permission
+          input: privatemines.upgrade
+          output: true
+        deny-commands:
+          - "[message] &cYou don't own a mine or have no upgrade available!"
+    delete_mine:
+      displayname: "&c&lDelete Mine"
+      lore:
+        - "&7Delete your private mine"
+        - "&c&oThis cannot be undone!"
+        - ""
+        - "&cClick to delete!"
+      material: TNT
+      slot: 16
+      actions:
+        - "[mine-delete]"
+        - "[close]"
+        - "[sound] ENTITY_GENERIC_EXPLODE"
+      requirements:
+        has_mine:
+          type: has-mine
+          output: "true"
+        permission:
+          type: permission
+          input: privatemines.delete
+          output: true
+        deny-commands:
+          - "[message] &cYou don't own a mine!"
