@@ -64,7 +64,13 @@ public class UserInterfaceAPI {
         List<RequirementImplementation> clonedList = new ArrayList<>(requirements);
         for (RequirementImplementation i : clonedList) {
             if (i.getType().equalsIgnoreCase(type)) {
-                return i;
+                try {
+                    // Return a fresh instance so setPath() on one item doesn't
+                    // corrupt the shared path of other items using the same type.
+                    return i.getClass().getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    return i;
+                }
             }
         }
         return null;
