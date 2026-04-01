@@ -102,4 +102,4 @@ mvn clean package
 All rights reserved. 
 
 ## Notes
-Most programming was not AI assisted, project was used to test claude by implementing new UI actions recently, readme generated with help from AI.
+Most programming was not AI assisted as the project was made in 2022 and abandoned, project was recently used to test claude by implementing new UI actions, readme generated with help from AI.
